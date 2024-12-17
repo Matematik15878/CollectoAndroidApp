@@ -1,0 +1,13 @@
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid
+        android:color="?attr/colorBackgroundFloating"/>
+    <corners
+        android:radius="10dp"/>
+    <stroke
+        android:color="@android:color/transparent"
+        android:width="2dp"/>
+    <padding
+        android:start="15dp"
+        android:end="15dp"/>
+</shape>

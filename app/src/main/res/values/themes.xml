@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/day_primary_color</item>
+        <item name="colorSecondary">@color/day_secondary_color</item>
+        <item name="backgroundColor">@color/day_background_color</item>
+        <item name="colorOnBackground">@color/day_background_color</item>
+        <item name="colorBackgroundFloating">@color/day_item_color</item>
+        <item name="android:textColor">@color/day_secondary_color</item>
+        <item name="android:textColorHint">@color/day_gray_text_color</item>
+        <item name="android:textColorSecondary">@color/day_main_text_color</item>
+        <item name="android:statusBarColor">@color/black</item>
+    </style>
+</resources>

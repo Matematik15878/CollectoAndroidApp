@@ -1,0 +1,87 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="15dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="5dp"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/move_up"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_button_move_up" />
+
+        <ImageView
+            android:id="@+id/move_down"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:paddingTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_button_move_down" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:paddingTop="8dp">
+
+        <EditText
+            android:id="@+id/record_input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_field"
+            android:textSize="20sp"
+            android:padding="8dp"/>
+
+        <TextView
+            android:id="@+id/field_length"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:textColor="?android:attr/textColorHint"
+            android:textAlignment="textStart"
+            android:fontFamily="@font/muli_medium"
+            android:text="0 / 30"
+            android:paddingStart="5dp"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp"
+        android:layout_gravity="end"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/delete_field_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:drawablePadding="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_button_delete" />
+
+    </LinearLayout>
+
+</LinearLayout>

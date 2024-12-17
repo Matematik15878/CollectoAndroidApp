@@ -1,0 +1,10 @@
+<resources>
+    <style name="CustomMenuTextAppearance" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:fontFamily">@font/muli</item>
+    </style>
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:fontFamily">@font/muli_medium</item>
+    </style>
+</resources>

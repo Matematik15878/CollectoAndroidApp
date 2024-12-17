@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/backgroundColor"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <!-- Header with back button and title -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:paddingTop="20dp"
+        android:paddingStart="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="?android:attr/colorPrimary"
+
+        android:paddingEnd="8dp"
+        android:paddingBottom="15dp"
+
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Back button -->
+        <ImageButton
+            android:id="@+id/back_button"
+
+            android:padding="10dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+
+            android:clickable="true"
+            android:src="@drawable/ic_button_return"/>
+
+        <!-- Page title -->
+        <TextView
+            android:id="@+id/page_title"
+
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1.5"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="@string/sign_in"
+            android:textColor="@color/white"
+            android:fontFamily="@font/muli_extrabold"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!-- Settings button -->
+        <ImageButton
+            android:id="@+id/settings_button"
+
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+
+            android:padding="10dp"
+            android:src="@drawable/ic_button_settings" />
+
+    </LinearLayout>
+
+    <!-- Login to account -->
+    <TextView
+        android:id="@+id/login_text_1"
+
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/muli_black"
+
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:text="@string/login_to_account"
+        android:textColor="?android:attr/textColorSecondary"
+        android:verticalScrollbarPosition="defaultPosition"
+
+        app:layout_constraintVertical_bias="0.14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
+
+    <!-- Enter your credential to login -->
+    <TextView
+        android:id="@+id/login_text_2"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textSize="18sp"
+        android:fontFamily="@font/muli_bold"
+        android:textColor="?android:attr/textColorSecondary"
+        android:text="@string/enter_your_credentials_to_sign_in"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_text_1"
+        app:layout_constraintVertical_bias="0.005" />
+
+    <!-- Email -->
+    <EditText
+        android:id="@+id/email_address_input"
+
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:paddingBottom="5dp"
+
+        android:hint="@string/email_hint"
+        android:fontFamily="@font/muli"
+        android:inputType="textEmailAddress"
+        android:textColorHint="?android:attr/textColorHint"
+        android:textColor="?android:attr/textColorSecondary"
+
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_logo_email"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_text_2"/>
+
+    <!-- Password -->
+    <EditText
+        android:id="@+id/password_input"
+
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:paddingBottom="5dp"
+
+        android:fontFamily="@font/muli"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:textColorHint="?android:attr/textColorHint"
+        android:textColor="?android:attr/textColorSecondary"
+
+        android:drawablePadding="4dp"
+        android:drawableStart="@drawable/ic_logo_password"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_address_input"/>
+
+    <!-- Login button -->
+    <Button
+        android:id="@+id/login_button"
+
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+
+        android:textSize="22sp"
+        android:text="@string/login_hing"
+        android:textColor="@color/white"
+        android:fontFamily="@font/muli_bold"
+        android:backgroundTint="?android:attr/colorPrimary"
+
+        app:cornerRadius="20dp"
+        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_input"/>
+
+    <!-- Forgot password -->
+    <TextView
+        android:id="@+id/forgot_password_text"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:clickable="true"
+
+        android:fontFamily="@font/muli"
+        android:text="@string/forgot_password"
+        android:textColor="?android:attr/textColor"
+        android:textSize="18sp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button"
+        app:layout_constraintVertical_bias="0.084" />
+
+    <!-- Already have account -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forgot_password_text"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
+
+        <!-- Create account -->
+        <TextView
+            android:id="@+id/create_account_text"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/muli"
+            android:paddingStart="5dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="5dp"
+
+            android:paddingBottom="5dp"
+            android:text="@string/dont_have_an_account_yet"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="18sp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forgot_password_text"
+            app:layout_constraintVertical_bias="0.393" />
+
+        <!-- Sign in -->
+        <TextView
+            android:id="@+id/register_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:fontFamily="@font/muli"
+            android:text="@string/sign_up"
+            android:textColor="?android:attr/textColor"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <!-- Email error message -->
+    <TextView
+        android:id="@+id/email_error"
+
+        android:layout_width="350dp"
+        android:layout_height="20dp"
+
+        android:textColor="@color/red"
+        android:visibility="invisible"
+
+        app:layout_constraintTop_toBottomOf="@+id/email_address_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Password error message -->
+    <TextView
+        android:id="@+id/password_error"
+
+        android:layout_width="350dp"
+        android:layout_height="20dp"
+
+        android:textColor="@color/red"
+        android:visibility="invisible"
+
+        app:layout_constraintTop_toBottomOf="@+id/password_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="invisible" />
+
+    <!-- Progress bar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:elevation="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Screen dimming -->
+    <View
+        android:id="@+id/darken_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#80000000"
+        android:visibility="gone"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

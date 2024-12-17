@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="red">#DC143C</color>
+    <color name="white">#d8d8d8</color>
+    <color name="black">#000000</color>
+
+    <color name="day_primary_color">#365E32</color>
+    <color name="day_secondary_color">#81A263</color>
+    <color name="day_gray_text_color">#959595</color>
+    <color name="day_main_text_color">#0F0909</color>
+    <color name="day_background_color">#FCFCFA</color>
+    <color name="day_item_color">#dbdbdb</color>
+
+    <color name="night_primary_color">#2C4C3B</color>
+    <color name="night_secondary_color">#7ea892</color>
+    <color name="night_gray_text_color">#959595</color>
+    <color name="night_main_text_color">#D1D1D1</color>
+    <color name="night_background_color">#222831</color>
+    <color name="night_item_color">#303845</color>
+</resources>

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:windowSoftInputMode="stateHidden|adjustResize"
+    android:background="?attr/backgroundColor"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/root_view">
+
+    <!-- Header with back button and title -->
+    <LinearLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingStart="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="?android:attr/colorPrimary"
+        android:paddingEnd="8dp"
+        android:paddingBottom="15dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Back button -->
+        <ImageButton
+            android:id="@+id/back_button"
+            android:padding="10dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:background="?android:attr/colorPrimary"
+            android:clickable="true"
+            android:src="@drawable/ic_button_return"/>
+
+        <!-- Page title -->
+        <TextView
+            android:id="@+id/page_title"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:text="@string/settings"
+            android:textColor="@color/white"
+            android:fontFamily="@font/muli_extrabold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </LinearLayout>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:id="@+id/main_scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/header_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- User's avatar -->
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_logo_user"/>
+
+            <!-- Username text view-->
+            <LinearLayout
+                android:id="@+id/userNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingEnd="-40dp"
+                android:gravity="center">
+
+                <!-- Username text view -->
+                <EditText
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:padding="5dp"
+                    android:fontFamily="@font/muli_extrabold"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="28sp"
+                    android:text="unauthorized"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <!-- Wrapper for checkmark and change username button -->
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_gravity="end">
+
+                    <!-- Confirm change username button -->
+                    <ImageView
+                        android:id="@+id/checkmark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableStart="@drawable/ic_theme_day"
+                        android:drawablePadding="5dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_button_confirm" />
+
+                    <!-- Change username button -->
+                    <ImageView
+                        android:id="@+id/changeUsername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableStart="@drawable/ic_theme_day"
+                        android:drawablePadding="5dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_logo_rename" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <!-- Email text view -->
+            <TextView
+                android:id="@+id/userEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/muli_bold"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="22sp"
+                android:paddingBottom="30dp"
+                android:text="example@mail.com"
+                android:layout_gravity="center"/>
+
+            <!-- Dividing line -->
+            <View
+                android:id="@+id/dividing_line_1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/textColorHint"/>
+
+            <!-- Night mode and language -->
+            <LinearLayout
+                android:id="@+id/theme_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userEmail"
+                app:layout_constraintVertical_bias="0.05"
+                tools:layout_editor_absoluteX="0dp">
+
+                <!-- Theme settings -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp">
+
+                    <TextView
+                        android:id="@+id/day_night_theme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_theme_day"
+                        android:drawablePadding="5dp"
+                        android:fontFamily="@font/muli_medium"
+                        android:text="@string/theme"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="20sp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/theme_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp" />
+
+                </LinearLayout>
+
+                <!-- Language settings -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/language_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_logo_language"
+                        android:drawablePadding="5dp"
+                        android:fontFamily="@font/muli_medium"
+                        android:text="@string/language"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/language_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:backgroundTint="?android:attr/textColorSecondary"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Dividing line -->
+            <View
+                android:id="@+id/dividing_line_2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/textColorHint"/>
+
+            <!-- Reset password -->
+            <LinearLayout
+                android:id="@+id/change_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="13dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/forgot_password_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:layout_weight="1"
+                        android:drawablePadding="5dp"
+                        android:fontFamily="@font/muli_medium"
+                        android:text="@string/reset_password"
+                        android:textColor="?android:attr/textColor"
+                        android:textSize="20sp"
+                        app:drawableStartCompat="@drawable/ic_logo_change_password" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Dividing line -->
+            <View
+                android:id="@+id/dividing_line_3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/textColorHint"/>
+
+            <!-- Log out -->
+            <LinearLayout
+                android:id="@+id/log_out"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/log_out_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:layout_weight="1"
+                        android:drawablePadding="5dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:fontFamily="@font/muli_medium"
+                        android:text="@string/log_out"
+                        android:textColor="@color/red"
+                        android:textSize="20sp"
+                        app:drawableStartCompat="@drawable/ic_button_log_out" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Progress bar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:elevation="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Screen dimming -->
+    <View
+        android:id="@+id/darken_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#80000000"
+        android:visibility="gone"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
