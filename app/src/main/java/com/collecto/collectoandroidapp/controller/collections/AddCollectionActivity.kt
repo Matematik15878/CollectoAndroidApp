@@ -34,8 +34,8 @@ class AddCollectionActivity : BaseActivity() {
     private lateinit var collectionService: CollectionsService
 
     // User selection from where to upload photos
-    private val REQUEST_CODE_GALLERY = 100
-    private val REQUEST_CODE_FILE_MANAGER = 101
+    private val requestCodeGallery = 100
+    private val requestCodeFileManager = 101
 
     // Variables for adding collection fields
     private var amountOfFields: Int = 0
@@ -161,14 +161,14 @@ class AddCollectionActivity : BaseActivity() {
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_CODE_GALLERY)
+        startActivityForResult(intent, requestCodeGallery)
     }
 
     // Opens the file manager
     private fun openFileManager() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_CODE_FILE_MANAGER)
+        startActivityForResult(intent, requestCodeFileManager)
     }
 
     // Actions after selecting a photo

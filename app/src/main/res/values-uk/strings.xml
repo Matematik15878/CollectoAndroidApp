@@ -38,9 +38,7 @@
     <string name="username_length_error">Довжина має бути від 5 до 25 символів</string>
     <string name="username_special_char_error">Ім\'я користувача не може містити спеціальних символів</string>
     <string name="email_already_exists">Електронна пошта вже використовується</string>
-    <string name="username_already_exists">Ім\'я користувача вже використовується</string>
     <string name="wrong_code_error">Неправильний верифікаційний код</string>
-    <string name="password_sent">Новий код підтвердження було вислано на вашу пошту</string>
     <string name="successful_registration">Ваш акаунт успішно зареєстровано</string>
     <string name="successful_authentication">Вхід у ваш обліковий запис успішний</string>
     <string name="wrong_email_or_password">Введено неправильну адресу ел. пошти або пароль</string>
@@ -66,7 +64,7 @@
     <string name="enter_description">введіть дуже цікавий опис</string>
     <string name="new_field">Нове поле</string>
     <string name="fields_of_the_collection">Поля колекції</string>
-    <string name="empty">Тут так пусто...</string>
+    <string name="empty">Тут так пусто…</string>
     <string name="choose_from_gallery">З галереї</string>
     <string name="choose_from_storage">З локального сховища</string>
     <string name="choose_image_source">Оберіть джерело фотографії</string>
@@ -79,7 +77,6 @@
     <string name="upload_avatar">Додати новий аватар</string>
     <string name="choose_action">Оберіть дію з аватаром</string>
     <string name="successful_avatar_change">Аватар додано успішно</string>
-    <string name="unsuccessful_avatar_change">Щось пішло не так, аватар не було додано</string>
     <string name="search_collection_hint">Пошук колекції за іменем</string>
     <string name="search_collection_order">Відсортувати за</string>
     <string name="edit_collection">Змінити</string>

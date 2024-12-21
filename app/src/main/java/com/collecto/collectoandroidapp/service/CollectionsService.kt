@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import com.collecto.collectoandroidapp.model.Collection
 import com.collecto.collectoandroidapp.repository.CollectionsRepository
 
-class CollectionsService (private val context: Context) {
+class CollectionsService (context: Context) {
     // Local services and repositories
     private val authService = AuthService(context.applicationContext)
     private val collectionsRepository = CollectionsRepository(context.applicationContext)
@@ -21,12 +21,12 @@ class CollectionsService (private val context: Context) {
         val validateDescription = collection.description?.let { validateLength(it, 500) }
 
         var validateFieldsNames = true
-        for (field in collection.custom_fields!!) {
+        for (field in collection.customFields!!) {
             if (!validateLength(field.name, 30)) validateFieldsNames = false
         }
-        val validateAmountOfFields = (collection.custom_fields.size < 21)
+        val validateAmountOfFields = (collection.customFields.size < 21)
 
-        val fieldNames = collection.custom_fields.map { it.name }
+        val fieldNames = collection.customFields.map { it.name }
         val uniqueFieldNames = fieldNames.toSet()
         val validateUniqueFields = fieldNames.size == uniqueFieldNames.size
 
@@ -37,7 +37,7 @@ class CollectionsService (private val context: Context) {
         } else if (!validateUniqueFields) {
             Pair(false, "Identical fields")
         } else {
-            val imageName = generateFileName(collection.user_id, imagePath)
+            val imageName = generateFileName(collection.userId, imagePath)
             if (collectionsRepository.saveCollection(collection, imageName, imagePath)) {
                 Pair(true, "Success")
             } else {
@@ -64,7 +64,7 @@ class CollectionsService (private val context: Context) {
     suspend fun getAllCollections(): List<Collection> {
         val collections = collectionsRepository.getAllCollections()
         return collections.sortedBy {
-                collection -> collection.updated_at?.let { OffsetDateTime.parse(it) }
+                collection -> collection.updatedAt?.let { OffsetDateTime.parse(it) }
         }
     }
 
@@ -99,12 +99,12 @@ class CollectionsService (private val context: Context) {
         val validateDescription = collection.description?.let { validateLength(it, 500) }
 
         var validateFieldsNames = true
-        for (field in collection.custom_fields!!) {
+        for (field in collection.customFields!!) {
             if (!validateLength(field.name, 30)) validateFieldsNames = false
         }
-        val validateAmountOfFields = (collection.custom_fields.size < 21)
+        val validateAmountOfFields = (collection.customFields.size < 21)
 
-        val fieldNames = collection.custom_fields.map { it.name }
+        val fieldNames = collection.customFields.map { it.name }
         val uniqueFieldNames = fieldNames.toSet()
         val validateUniqueFields = fieldNames.size == uniqueFieldNames.size
 
@@ -115,7 +115,7 @@ class CollectionsService (private val context: Context) {
         } else if (!validateUniqueFields) {
             Pair(false, "Identical fields")
         } else {
-            val imageName = generateFileName(collection.user_id, imagePath)
+            val imageName = generateFileName(collection.userId, imagePath)
             if (collectionsRepository.modifyCollection(collection, imageName, imagePath)) {
                 Pair(true, "Success")
             } else {

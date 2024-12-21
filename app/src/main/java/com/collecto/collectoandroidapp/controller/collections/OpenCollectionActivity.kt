@@ -90,7 +90,7 @@ class OpenCollectionActivity : BaseActivity() {
         val animLargerScale : Animation = AnimationUtils.loadAnimation(this, R.anim.imageview_click_anim)
 
         // Filling fields with collection data
-        collection?.let {
+        collection.let {
             lifecycleScope.launch {
                 collectionItems = itemsService.getItems(it.id)
                 delay(200)
@@ -303,7 +303,7 @@ class OpenCollectionActivity : BaseActivity() {
 
     // Spinner Filling Method
     private fun fillSpinnerWithCustomFields() {
-        val customFields = collection.custom_fields
+        val customFields = collection.customFields
         val spinnerItems = customFields?.map { SpinnerItem(it.id, it.name) }?.toMutableList() ?: mutableListOf()
 
         spinnerItems.add(0, SpinnerItem(-1, "name"))
@@ -324,14 +324,14 @@ class OpenCollectionActivity : BaseActivity() {
     private suspend fun searchItemsByField(query: String) {
         val fieldSpinner: Spinner = findViewById(R.id.field_spinner)
         val selectedItem = fieldSpinner.selectedItem as? SpinnerItem
-        if (selectedItem == null || selectedItem.id == -1) {
-            collectionItems = itemsService.getItems(collection.id)
+        collectionItems = if (selectedItem == null || selectedItem.id == -1) {
+            itemsService.getItems(collection.id)
                 .filter { it.name.contains(query, ignoreCase = true) }
         } else {
-            collectionItems = itemsService.getItems(collection.id)
+            itemsService.getItems(collection.id)
                 .filter { item ->
-                    item.field_contents?.any {
-                        it.field_id == selectedItem.id && it.field_content.contains(query, ignoreCase = true)
+                    item.fieldContents?.any {
+                        it.fieldId == selectedItem.id && it.fieldContent.contains(query, ignoreCase = true)
                     } == true
                 }
         }
@@ -343,32 +343,32 @@ class OpenCollectionActivity : BaseActivity() {
     private suspend fun sortItemsByField() {
         val fieldSpinner: Spinner = findViewById(R.id.field_spinner)
         val selectedFieldIndex = fieldSpinner.selectedItemPosition
-        val selectedFieldId = collection.custom_fields?.getOrNull(selectedFieldIndex - 1)?.id
+        val selectedFieldId = collection.customFields?.getOrNull(selectedFieldIndex - 1)?.id
 
         if (selectedFieldId == null) {
-            when (sortState) {
-                1 -> collectionItems = collectionItems.sortedByDescending { it.name }
-                2 -> collectionItems = collectionItems.sortedBy { it.name }
-                else -> collectionItems = collectionItems.sortedBy { parseDate(it.updated_at) }
+            collectionItems = when (sortState) {
+                1 -> collectionItems.sortedByDescending { it.name }
+                2 -> collectionItems.sortedBy { it.name }
+                else -> collectionItems.sortedBy { parseDate(it.updatedAt) }
             }
         } else {
             val fieldContents = collectionItems.mapNotNull { item ->
-                item.field_contents?.firstOrNull { it.field_id == selectedFieldId }?.field_content
+                item.fieldContents?.firstOrNull { it.fieldId == selectedFieldId }?.fieldContent
             }
 
             val isNumeric = fieldContents.all { it.matches("\\d+".toRegex()) }
 
             collectionItems = if (isNumeric) {
                 when (sortState) {
-                    1 -> collectionItems.sortedByDescending { it.field_contents?.firstOrNull { it.field_id == selectedFieldId }?.field_content?.toIntOrNull() ?: Int.MAX_VALUE }
-                    2 -> collectionItems.sortedBy { it.field_contents?.firstOrNull { it.field_id == selectedFieldId }?.field_content?.toIntOrNull() ?: Int.MAX_VALUE }
-                    else -> collectionItems.sortedBy { parseDate(it.updated_at) }
+                    1 -> collectionItems.sortedByDescending { item -> item.fieldContents?.firstOrNull { it.fieldId == selectedFieldId }?.fieldContent?.toIntOrNull() ?: Int.MAX_VALUE }
+                    2 -> collectionItems.sortedBy { item -> item.fieldContents?.firstOrNull { it.fieldId == selectedFieldId }?.fieldContent?.toIntOrNull() ?: Int.MAX_VALUE }
+                    else -> collectionItems.sortedBy { parseDate(it.updatedAt) }
                 }
             } else {
                 when (sortState) {
-                    1 -> collectionItems.sortedByDescending { it.field_contents?.firstOrNull { it.field_id == selectedFieldId }?.field_content ?: "" }
-                    2 -> collectionItems.sortedBy { it.field_contents?.firstOrNull { it.field_id == selectedFieldId }?.field_content ?: "" }
-                    else -> collectionItems.sortedBy { parseDate(it.updated_at) }
+                    1 -> collectionItems.sortedByDescending { item -> item.fieldContents?.firstOrNull { it.fieldId == selectedFieldId }?.fieldContent ?: "" }
+                    2 -> collectionItems.sortedBy { item -> item.fieldContents?.firstOrNull { it.fieldId == selectedFieldId }?.fieldContent ?: "" }
+                    else -> collectionItems.sortedBy { parseDate(it.updatedAt) }
                 }
             }
         }

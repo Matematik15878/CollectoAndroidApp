@@ -16,7 +16,6 @@ import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.Auth
 import com.collecto.collectoandroidapp.R
 import io.github.jan.supabase.auth.OtpType
-import io.github.jan.supabase.postgrest.from
 import kotlinx.serialization.json.JsonObject
 import io.github.jan.supabase.storage.Storage
 import io.github.jan.supabase.storage.storage
@@ -118,9 +117,9 @@ class AuthRepository(private val context: Context) {
     }
 
     // Method to change password
-    suspend fun resetPassword(new_password: String): Pair<Boolean, String> {
+    suspend fun resetPassword(newPassword: String): Pair<Boolean, String> {
         try {
-            supabase.auth.updateUser { password = new_password }
+            supabase.auth.updateUser { password = newPassword }
         } catch (e: Exception) {
             return if (e.message == "New password should be different from the old password.") {
                 Pair(false, "Old password")
@@ -272,7 +271,7 @@ class AuthRepository(private val context: Context) {
 
         val scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, scaledWidth, scaledHeight, true)
 
-        var stream = ByteArrayOutputStream()
+        val stream = ByteArrayOutputStream()
         var quality = 90
         scaledBitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream)
 
@@ -304,7 +303,7 @@ class AuthRepository(private val context: Context) {
                 val bytes = bucket.downloadAuthenticated(imagePath)
                 val bitmap = byteArrayToBitmap(bytes)
 
-                bitmap?.let {
+                bitmap.let {
                     cacheDir.mkdirs()
                     FileOutputStream(cacheFile).use { fos ->
                         it.compress(Bitmap.CompressFormat.PNG, 100, fos)

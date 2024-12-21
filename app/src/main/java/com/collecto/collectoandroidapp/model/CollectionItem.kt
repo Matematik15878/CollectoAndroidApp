@@ -9,11 +9,11 @@ import kotlinx.serialization.Serializable
 data class CollectionItem(
     val id: Long,
     val name: String,
-    val field_contents: List<CollectionItemFields>? = emptyList(),
-    val user_id: String,
-    val collection_id: Long,
-    val created_at: String? = null,
-    val updated_at: String? = null,
-    val image_path: String? = null,
+    val fieldContents: List<CollectionItemFields>? = emptyList(),
+    val userId: String,
+    val collectionId: Long,
+    val createdAt: String? = null,
+    val updatedAt: String? = null,
+    val imagePath: String? = null,
     val description: String? = null
 ) : Parcelable

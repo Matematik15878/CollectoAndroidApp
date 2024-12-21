@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:windowSoftInputMode="stateHidden|adjustResize"
-    android:background="?attr/backgroundColor"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:id="@+id/root_view">
@@ -38,7 +37,7 @@
         <TextView
             android:id="@+id/page_title"
             android:layout_gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -88,6 +87,7 @@
                 android:orientation="horizontal"
                 android:paddingTop="10dp"
                 android:paddingEnd="-40dp"
+                android:paddingStart="0dp"
                 android:gravity="center">
 
                 <!-- Username text view -->
@@ -178,20 +178,21 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingStart="16dp">
+                    android:paddingStart="16dp"
+                    android:paddingEnd="0dp">
 
                     <TextView
                         android:id="@+id/day_night_theme"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:layout_weight="1"
-                        android:drawableStart="@drawable/ic_theme_day"
                         android:drawablePadding="5dp"
                         android:fontFamily="@font/muli_medium"
                         android:text="@string/theme"
                         android:textColor="?android:attr/textColorSecondary"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        app:drawableStartCompat="@drawable/ic_theme_day" />
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/theme_switch"
@@ -209,21 +210,22 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingStart="16dp"
+                    android:paddingEnd="0dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/language_label"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:layout_weight="1"
-                        android:drawableStart="@drawable/ic_logo_language"
                         android:drawablePadding="5dp"
                         android:fontFamily="@font/muli_medium"
                         android:text="@string/language"
                         android:textColor="?android:attr/textColorSecondary"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        app:drawableStartCompat="@drawable/ic_logo_language" />
 
                     <Spinner
                         android:id="@+id/language_spinner"

@@ -134,16 +134,20 @@ class NewPasswordActivity : BaseActivity() {
                     val intent = Intent(this@NewPasswordActivity, ShowCollectionsActivity::class.java)
                     startActivity(intent)
                 } else {
-                    if (error == "Wrong code") {
-                        wrongCredentialsEntered()
-                    } else if (error == "Old password") {
-                        oldPasswordEntered()
-                        delay(2000)
-                        val toast = Toast.makeText(this@NewPasswordActivity, getString(R.string.new_code_sent), Toast.LENGTH_LONG)
-                        toast.show()
-                        Handler(Looper.getMainLooper()).postDelayed({ toast.cancel() }, 60000)
-                    } else {
-                        Toast.makeText(this@NewPasswordActivity, getString(R.string.unsuccessful_reset), Toast.LENGTH_LONG).show()
+                    when (error) {
+                        "Wrong code" -> {
+                            wrongCredentialsEntered()
+                        }
+                        "Old password" -> {
+                            oldPasswordEntered()
+                            delay(2000)
+                            val toast = Toast.makeText(this@NewPasswordActivity, getString(R.string.new_code_sent), Toast.LENGTH_LONG)
+                            toast.show()
+                            Handler(Looper.getMainLooper()).postDelayed({ toast.cancel() }, 60000)
+                        }
+                        else -> {
+                            Toast.makeText(this@NewPasswordActivity, getString(R.string.unsuccessful_reset), Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
 

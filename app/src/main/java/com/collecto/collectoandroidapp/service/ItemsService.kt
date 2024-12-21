@@ -5,12 +5,11 @@ import android.net.Uri
 import java.util.Locale
 import android.content.Context
 import android.graphics.Bitmap
-import com.collecto.collectoandroidapp.model.Collection
 import java.text.SimpleDateFormat
 import com.collecto.collectoandroidapp.model.CollectionItem
 import com.collecto.collectoandroidapp.repository.ItemsRepository
 
-class ItemsService(private val context: Context) {
+class ItemsService(context: Context) {
     // Local services and repositories
     private val itemsRepository = ItemsRepository(context.applicationContext)
 
@@ -35,14 +34,14 @@ class ItemsService(private val context: Context) {
         val validateDescription = item.description?.let { validateLength(it, 500) }
 
         var validateFieldsNames = true
-        for (field in item.field_contents!!) {
-            if (!validateLength(field.field_content, 10)) validateFieldsNames = false
+        for (field in item.fieldContents!!) {
+            if (!validateLength(field.fieldContent, 10)) validateFieldsNames = false
         }
 
         return if (!validateName || !validateFieldsNames || !validateDescription!!) {
             Pair(false, "Wrong length")
         } else {
-            val imageName = generateFileName(item.user_id, imagePath)
+            val imageName = generateFileName(item.userId, imagePath)
             if (itemsRepository.saveItem(item, imageName, imagePath)) {
                 Pair(true, "Success")
             } else {
@@ -76,14 +75,14 @@ class ItemsService(private val context: Context) {
         val validateDescription = item.description?.let { validateLength(it, 500) }
 
         var validateFieldsNames = true
-        for (field in item.field_contents!!) {
-            if (!validateLength(field.field_content, 100)) validateFieldsNames = false
+        for (field in item.fieldContents!!) {
+            if (!validateLength(field.fieldContent, 100)) validateFieldsNames = false
         }
 
         return if (!validateName || !validateFieldsNames || !validateDescription!!) {
             Pair(false, "Wrong length")
         } else {
-            val imageName = generateFileName(item.user_id, imagePath)
+            val imageName = generateFileName(item.userId, imagePath)
             if (itemsRepository.modifyItem(item, imageName, imagePath)) {
                 Pair(true, "Success")
             } else {

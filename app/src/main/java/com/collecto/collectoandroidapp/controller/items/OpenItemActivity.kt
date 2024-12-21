@@ -114,10 +114,10 @@ class OpenItemActivity : BaseActivity() {
     private fun showFields(item: CollectionItem) {
         fieldsContainer.removeAllViews()
 
-        val sortedCustomFields = collection.custom_fields?.sortedBy { it.order } ?: listOf()
+        val sortedCustomFields = collection.customFields?.sortedBy { it.order } ?: listOf()
 
         sortedCustomFields.forEach { field ->
-            val content = item.field_contents?.firstOrNull { it.field_id == field.id }
+            val content = item.fieldContents?.firstOrNull { it.fieldId == field.id }
             val fieldName = field.name
             val itemView = layoutInflater.inflate(R.layout.layout_item_fields, fieldsContainer, false)
 
@@ -125,7 +125,7 @@ class OpenItemActivity : BaseActivity() {
             val fieldContentTextView = itemView.findViewById<TextView>(R.id.record_text)
 
             titleTextView.text = fieldName
-            fieldContentTextView.text = content?.field_content ?: ""
+            fieldContentTextView.text = content?.fieldContent ?: ""
 
             fieldsContainer.addView(itemView)
         }

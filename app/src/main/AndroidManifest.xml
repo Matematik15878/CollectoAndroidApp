@@ -67,7 +67,6 @@
         <activity
             android:name=".controller.collections.AddCollectionActivity"
             android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait"
             android:exported="true" />
 
         <activity

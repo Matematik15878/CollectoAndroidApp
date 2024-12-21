@@ -36,11 +36,10 @@ class UpdateCollectionActivity : BaseActivity() {
     private lateinit var collectionService: CollectionsService
 
     // User selection from where to upload photos
-    private val REQUEST_CODE_GALLERY = 100
-    private val REQUEST_CODE_FILE_MANAGER = 101
+    private val requestCodeGallery = 100
+    private val requestCodeFileManager = 101
 
     // Variables for adding collection fields
-    private var amountOfFields: Int = 0
     private var fields = mutableListOf<View>()
 
     // Functional elements of the page
@@ -57,7 +56,7 @@ class UpdateCollectionActivity : BaseActivity() {
     private var selectedImageUri: Uri? = null
 
     // Local collection object
-    private var collection: Collection? = null;
+    private var collection: Collection? = null
 
     // Basic logic of the activity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -192,14 +191,14 @@ class UpdateCollectionActivity : BaseActivity() {
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_CODE_GALLERY)
+        startActivityForResult(intent, requestCodeGallery)
     }
 
     // Opens the file manager
     private fun openFileManager() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_CODE_FILE_MANAGER)
+        startActivityForResult(intent, requestCodeFileManager)
     }
 
     // Actions after selecting a photo
@@ -225,13 +224,12 @@ class UpdateCollectionActivity : BaseActivity() {
         val fieldsContainer = findViewById<LinearLayout>(R.id.fields_container)
         fieldsContainer.removeAllViews()
 
-        val sortedFields = collection.custom_fields?.sortedBy { it.order } ?: emptyList()
+        val sortedFields = collection.customFields?.sortedBy { it.order } ?: emptyList()
         fields.clear()
 
         sortedFields.forEach { field ->
             val fieldView = layoutInflater.inflate(R.layout.layout_item_field, fieldsContainer, false)
 
-            val recordInputText = fieldView.findViewById<EditText>(R.id.record_input_text)
             val deleteFieldButton = fieldView.findViewById<ImageView>(R.id.delete_field_button)
             val moveUpButton = fieldView.findViewById<ImageView>(R.id.move_up)
             val moveDownButton = fieldView.findViewById<ImageView>(R.id.move_down)
@@ -255,7 +253,7 @@ class UpdateCollectionActivity : BaseActivity() {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
 
-            recordInputText.setText(field.name)
+            fieldName.text = field.name
 
             deleteFieldButton.setOnClickListener {
                 removeField(field)
@@ -278,7 +276,7 @@ class UpdateCollectionActivity : BaseActivity() {
 
     // Move field up
     private fun moveFieldUp(field: CustomCollectionField) {
-        val fieldsList = collection?.custom_fields?.toMutableList() ?: return
+        val fieldsList = collection?.customFields?.toMutableList() ?: return
         val index = fieldsList.indexOf(field)
 
         if (index > 0) {
@@ -288,7 +286,7 @@ class UpdateCollectionActivity : BaseActivity() {
                 fieldsList[index - 1].order = fieldsList[index].order
             }
             fieldsList.add(index - 1, fieldsList.removeAt(index))
-            collection = collection?.copy(custom_fields = fieldsList)
+            collection = collection?.copy(customFields = fieldsList)
 
             fillFieldsContainer(collection!!)
         }
@@ -296,7 +294,7 @@ class UpdateCollectionActivity : BaseActivity() {
 
     // Move field down
     private fun moveFieldDown(field: CustomCollectionField) {
-        val fieldsList = collection?.custom_fields?.toMutableList() ?: return
+        val fieldsList = collection?.customFields?.toMutableList() ?: return
         val index = fieldsList.indexOf(field)
 
         if (index < fieldsList.size - 1) {
@@ -306,7 +304,7 @@ class UpdateCollectionActivity : BaseActivity() {
                 fieldsList[index + 1].order = fieldsList[index].order
             }
             fieldsList.add(index + 1, fieldsList.removeAt(index))
-            collection = collection?.copy(custom_fields = fieldsList)
+            collection = collection?.copy(customFields = fieldsList)
 
             fillFieldsContainer(collection!!)
         }
@@ -319,7 +317,7 @@ class UpdateCollectionActivity : BaseActivity() {
             val updatedName = fieldNameEditText.text.toString().trim()
 
             if (updatedName.isNotEmpty()) {
-                collection?.custom_fields?.getOrNull(index)?.let {
+                collection?.customFields?.getOrNull(index)?.let {
                     customField -> customField.name = updatedName
                 }
             }
@@ -328,8 +326,8 @@ class UpdateCollectionActivity : BaseActivity() {
 
     // Add new field functionality
     private fun addNewField() {
-        val fields = collection?.custom_fields?.toMutableList() ?: mutableListOf()
-        val newFieldId = (collection?.max_field_id?.toInt() ?: 0) + 1
+        val fields = collection?.customFields?.toMutableList() ?: mutableListOf()
+        val newFieldId = (collection?.maxFieldId?.toInt() ?: 0) + 1
 
         val newField = CustomCollectionField(
             id = newFieldId,
@@ -338,8 +336,8 @@ class UpdateCollectionActivity : BaseActivity() {
         )
 
         collection = collection?.copy(
-            max_field_id = newFieldId.toString(),
-            custom_fields = fields.apply { add(newField) }
+            maxFieldId = newFieldId.toString(),
+            customFields = fields.apply { add(newField) }
         )
 
         collection?.let { fillFieldsContainer(it) }
@@ -347,7 +345,7 @@ class UpdateCollectionActivity : BaseActivity() {
 
     // Remove field field functionality
     private fun removeField(field: CustomCollectionField) {
-        val fields = collection?.custom_fields?.toMutableList() ?: return
+        val fields = collection?.customFields?.toMutableList() ?: return
 
         fields.remove(field)
 
@@ -355,7 +353,7 @@ class UpdateCollectionActivity : BaseActivity() {
             customField.order = index + 1
         }
 
-        collection = collection!!.copy(custom_fields = fields)
+        collection = collection!!.copy(customFields = fields)
 
         fillFieldsContainer(collection!!)
     }
@@ -405,20 +403,20 @@ class UpdateCollectionActivity : BaseActivity() {
     private suspend fun updateCollection(): Boolean {
         val name = collectionNameInput.text.toString().trim()
         val description = collectionDescriptionInput.text.toString().trim()
-        val userID = collection?.user_id ?: ""
+        val userID = collection?.userId ?: ""
         val customFields = getFields()
-        val maxFieldId = collection?.max_field_id ?: customFields.size.toString()
+        val maxFieldId = collection?.maxFieldId ?: customFields.size.toString()
 
         val newCollection = Collection(
             id = collection?.id ?: 0,
             name = name,
             description = description,
-            user_id = userID,
-            custom_fields = customFields,
-            image_path = collection?.image_path,
-            created_at = collection?.created_at,
-            updated_at = "",
-            max_field_id = maxFieldId
+            userId = userID,
+            customFields = customFields,
+            imagePath = collection?.imagePath,
+            createdAt = collection?.createdAt,
+            updatedAt = "",
+            maxFieldId = maxFieldId
         )
 
         val (result, error) = collectionService.modifyCollection(newCollection, selectedImageUri)
@@ -452,7 +450,7 @@ class UpdateCollectionActivity : BaseActivity() {
             if (fieldName.isNotEmpty()) {
                 customFields.add(
                     CustomCollectionField(
-                        id = (collection?.custom_fields?.getOrNull(index)?.id) ?: (index + 1),
+                        id = (collection?.customFields?.getOrNull(index)?.id) ?: (index + 1),
                         order = index + 1,
                         name = fieldName
                     )

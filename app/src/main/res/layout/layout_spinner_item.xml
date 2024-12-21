@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textSize="20sp"
-    android:gravity="left"
     android:fontFamily="@font/muli_medium"
     android:textColor="?android:attr/textColorSecondary"
     android:padding="5dip" />

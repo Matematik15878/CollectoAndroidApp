@@ -199,7 +199,7 @@ class ShowCollectionsActivity : BaseActivity() {
     private suspend fun loadCollections() {
         val collections = collectionService.getAllCollections()
         allCollectionsList = collections.sortedByDescending { collection ->
-            collection.updated_at?.let { OffsetDateTime.parse(it) }
+            collection.updatedAt?.let { OffsetDateTime.parse(it) }
         }
         collectionItemCounts = collectionService.countElements(allCollectionsList)
     }
@@ -311,12 +311,12 @@ class ShowCollectionsActivity : BaseActivity() {
             "name" -> when (sortState) {
                 1 -> allCollectionsList.sortedBy { it.name.lowercase() }
                 2 -> allCollectionsList.sortedByDescending { it.name.lowercase() }
-                else -> allCollectionsList.sortedBy { it.updated_at?.let { OffsetDateTime.parse(it) } }
+                else -> allCollectionsList.sortedBy { collection -> collection.updatedAt?.let { OffsetDateTime.parse(it) } }
             }
             "count" -> when (sortState) {
                 1 -> allCollectionsList.sortedBy { collectionItemCounts[it.id] ?: 0 }
                 2 -> allCollectionsList.sortedByDescending { collectionItemCounts[it.id] ?: 0 }
-                else -> allCollectionsList.sortedBy { it.updated_at?.let { OffsetDateTime.parse(it) } }
+                else -> allCollectionsList.sortedBy { collection -> collection.updatedAt?.let { OffsetDateTime.parse(it) } }
             }
             else -> allCollectionsList
         }

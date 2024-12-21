@@ -37,7 +37,7 @@ class ItemsRepository(private val context: Context) {
     @Serializable
     private data class FieldsResponse(
         val id: Long,
-        val field_contents: String?
+        val fieldContents: String?
     )
 
     // Collects collection data correctly
@@ -58,7 +58,7 @@ class ItemsRepository(private val context: Context) {
             val itemFieldsResponses = fetchItemFieldsByItemId(item.id)
             val customFieldsMap = itemFieldsResponses.associateBy { it.id }
 
-            val customFieldsJson = customFieldsMap[item.id]?.field_contents
+            val customFieldsJson = customFieldsMap[item.id]?.fieldContents
             val fieldContents = customFieldsJson?.let {
                 Json.decodeFromString<List<CollectionItemFields>>(it)
             } ?: emptyList()
@@ -66,12 +66,12 @@ class ItemsRepository(private val context: Context) {
             CollectionItem(
                 id = item.id,
                 name = item.name,
-                field_contents = fieldContents,
-                user_id = item.user_id,
-                collection_id = item.collection_id,
-                created_at = item.created_at,
-                updated_at = item.updated_at,
-                image_path = item.image_path,
+                fieldContents = fieldContents,
+                userId = item.userId,
+                collectionId = item.collectionId,
+                createdAt = item.createdAt,
+                updatedAt = item.updatedAt,
+                imagePath = item.imagePath,
                 description = item.description
             )
         }
@@ -102,7 +102,7 @@ class ItemsRepository(private val context: Context) {
     suspend fun loadIcon(item: CollectionItem): Bitmap? {
         val bucket = supabase.storage.from("itemIcons")
 
-        val imagePath = item.image_path ?: return null
+        val imagePath = item.imagePath ?: return null
         val sanitizedFileName = imagePath.replace("/", "-")
 
         val cacheDir = File(context.cacheDir, "itemIcons")
@@ -114,9 +114,9 @@ class ItemsRepository(private val context: Context) {
 
         try {
             val bytes = bucket.downloadAuthenticated(imagePath)
-            val bitmap = bytes?.let { byteArrayToBitmap(it) }
+            val bitmap = byteArrayToBitmap(bytes)
 
-            bitmap?.let {
+            bitmap.let {
                 cacheDir.mkdirs()
                 FileOutputStream(cacheFile).use { fos ->
                     it.compress(Bitmap.CompressFormat.PNG, 100, fos)
@@ -135,7 +135,7 @@ class ItemsRepository(private val context: Context) {
     suspend fun loadImage(item: CollectionItem): Bitmap? {
         val bucket = supabase.storage.from("itemImages")
 
-        val imagePath = item.image_path ?: return null
+        val imagePath = item.imagePath ?: return null
         val sanitizedFileName = imagePath.replace("/", "-")
 
         val cacheDir = File(context.cacheDir, "itemImages")
@@ -147,9 +147,9 @@ class ItemsRepository(private val context: Context) {
 
         try {
             val bytes = bucket.downloadAuthenticated(imagePath)
-            val bitmap = bytes?.let { byteArrayToBitmap(it) }
+            val bitmap = byteArrayToBitmap(bytes)
 
-            bitmap?.let {
+            bitmap.let {
                 cacheDir.mkdirs()
                 FileOutputStream(cacheFile).use { fos ->
                     it.compress(Bitmap.CompressFormat.PNG, 100, fos)
@@ -227,7 +227,7 @@ class ItemsRepository(private val context: Context) {
 
         val scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, scaledWidth, scaledHeight, true)
 
-        var stream = ByteArrayOutputStream()
+        val stream = ByteArrayOutputStream()
         var quality = 90
         scaledBitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream)
 
@@ -242,13 +242,13 @@ class ItemsRepository(private val context: Context) {
 
     // Saves data to DB
     private suspend fun saveItemData(imageName: String?, item: CollectionItem): Boolean {
-        val fieldContentsJson = Json.encodeToString(item.field_contents)
+        val fieldContentsJson = Json.encodeToString(item.fieldContents)
 
         val data = mapOf(
             "name" to item.name,
             "field_contents" to fieldContentsJson,
-            "user_id" to item.user_id,
-            "collection_id" to item.collection_id.toString(),
+            "user_id" to item.userId,
+            "collection_id" to item.collectionId.toString(),
             "created_at" to OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
             "updated_at" to OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
             "image_path" to imageName,
@@ -274,8 +274,8 @@ class ItemsRepository(private val context: Context) {
         val bucketIcons = supabase.storage.from("itemsIcons")
         val bucketImages = supabase.storage.from("itemsImages")
         try {
-            item.image_path?.let { bucketIcons.delete(it) }
-            item.image_path?.let { bucketImages.delete(it) }
+            item.imagePath?.let { bucketIcons.delete(it) }
+            item.imagePath?.let { bucketImages.delete(it) }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -291,14 +291,14 @@ class ItemsRepository(private val context: Context) {
                 collectionSaveResult = modifyItemData(imageName, item)
             }
         } else {
-            collectionSaveResult = modifyItemData(item.image_path, item)
+            collectionSaveResult = modifyItemData(item.imagePath, item)
         }
         return (photoSaveResult && collectionSaveResult)
     }
 
     // Modifies data in DB
     private suspend fun modifyItemData(imageName: String?, item: CollectionItem): Boolean {
-        val customFieldsJson = Json.encodeToString(item.field_contents)
+        val customFieldsJson = Json.encodeToString(item.fieldContents)
 
         try {
             supabase.from("items").update(

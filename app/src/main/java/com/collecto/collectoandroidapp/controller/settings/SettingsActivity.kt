@@ -48,8 +48,8 @@ class SettingsActivity : BaseActivity() {
     private lateinit var settingsService: SettingsService
 
     // User selection from where to upload photos
-    private val REQUEST_CODE_GALLERY = 100
-    private val REQUEST_CODE_FILE_MANAGER = 101
+    private val requestCodeGallery = 100
+    private val requestCodeFileManager = 101
 
     // Basic logic of the activity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +84,7 @@ class SettingsActivity : BaseActivity() {
                 }
                 val selectedLanguage = languages[position]
                 if (selectedLanguage != currentLanguage) {
-                    val animator = ObjectAnimator.ofFloat(findViewById<View>(android.R.id.content), "alpha", 1f, 0f)
+                    val animator = ObjectAnimator.ofFloat(findViewById(android.R.id.content), "alpha", 1f, 0f)
                     animator.duration = 300
                     animator.addListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
@@ -144,7 +144,7 @@ class SettingsActivity : BaseActivity() {
 
     // Method of changing theme
     private fun setNightMode(isNightMode: Boolean) {
-        val animator = ObjectAnimator.ofFloat(findViewById<View>(android.R.id.content), "alpha", 1f, 0f)
+        val animator = ObjectAnimator.ofFloat(findViewById(android.R.id.content), "alpha", 1f, 0f)
         animator.duration = 300
         animator.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
@@ -281,14 +281,14 @@ class SettingsActivity : BaseActivity() {
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_CODE_GALLERY)
+        startActivityForResult(intent, requestCodeGallery)
     }
 
     // Opens the file manager
     private fun openFileManager() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_CODE_FILE_MANAGER)
+        startActivityForResult(intent, requestCodeFileManager)
     }
 
     // Actions after selecting a photo

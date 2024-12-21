@@ -7,6 +7,6 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 data class CollectionItemFields (
-    val field_id: Int,
-    var field_content: String = ""
+    val fieldId: Int,
+    var fieldContent: String = ""
 ) : Parcelable

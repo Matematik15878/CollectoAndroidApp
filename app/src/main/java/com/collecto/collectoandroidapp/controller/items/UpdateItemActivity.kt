@@ -40,8 +40,8 @@ class UpdateItemActivity : BaseActivity() {
     private lateinit var collectionService: CollectionsService
 
     // User selection from where to upload photos
-    private val REQUEST_CODE_GALLERY = 100
-    private val REQUEST_CODE_FILE_MANAGER = 101
+    private val requestCodeGallery = 100
+    private val requestCodeFileManager = 101
 
     // Collection Item Fields
     private lateinit var recordsContainer: LinearLayout
@@ -60,8 +60,8 @@ class UpdateItemActivity : BaseActivity() {
     private var selectedImageUri: Uri? = null
 
     // Local collection object
-    private var item: CollectionItem? = null;
-    private var collection: Collection? = null;
+    private var item: CollectionItem? = null
+    private var collection: Collection? = null
 
     // Basic logic of the activity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -183,14 +183,14 @@ class UpdateItemActivity : BaseActivity() {
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_CODE_GALLERY)
+        startActivityForResult(intent, requestCodeGallery)
     }
 
     // Opens the file manager
     private fun openFileManager() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_CODE_FILE_MANAGER)
+        startActivityForResult(intent, requestCodeFileManager)
     }
 
     // Actions after selecting a photo
@@ -232,7 +232,7 @@ class UpdateItemActivity : BaseActivity() {
         itemDescriptionInput.setText(item.description)
 
         collection?.let { coll ->
-            loadCustomFields(coll.custom_fields, item)
+            loadCustomFields(coll.customFields, item)
         }
     }
 
@@ -269,7 +269,7 @@ class UpdateItemActivity : BaseActivity() {
             fieldNameTextView.text = field.name
             fieldInputEditText.tag = field.id
 
-            val fieldValue = item.field_contents?.find { it.field_id == field.id }?.field_content
+            val fieldValue = item.fieldContents?.find { it.fieldId == field.id }?.fieldContent
             fieldInputEditText.setText(fieldValue)
 
             recordsContainer.addView(fieldView)
@@ -279,7 +279,7 @@ class UpdateItemActivity : BaseActivity() {
     // Collection Saving Method
     private suspend fun updateCollectionItem(localItem: CollectionItem) {
         val collectionId = collection?.id ?: return
-        val userId = collection!!.user_id
+        val userId = collection!!.userId
         val itemName = itemNameInput.text.toString()
         val itemDescription = itemDescriptionInput.text.toString()
 
@@ -298,12 +298,12 @@ class UpdateItemActivity : BaseActivity() {
         val collectionItem = CollectionItem(
             id = localItem.id,
             name = itemName,
-            field_contents = fieldContents,
-            user_id = userId,
-            collection_id = collectionId,
-            created_at = localItem.created_at,
-            updated_at = "",
-            image_path = localItem.image_path,
+            fieldContents = fieldContents,
+            userId = userId,
+            collectionId = collectionId,
+            createdAt = localItem.createdAt,
+            updatedAt = "",
+            imagePath = localItem.imagePath,
             description = itemDescription
         )
 

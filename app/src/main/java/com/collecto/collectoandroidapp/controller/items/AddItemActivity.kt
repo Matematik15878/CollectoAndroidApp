@@ -41,8 +41,8 @@ class AddItemActivity : BaseActivity() {
     private lateinit var collectionService: CollectionsService
 
     // User selection from where to upload photos
-    private val REQUEST_CODE_GALLERY = 100
-    private val REQUEST_CODE_FILE_MANAGER = 101
+    private val requestCodeGallery = 100
+    private val requestCodeFileManager = 101
 
     // Collection Item Fields
     private lateinit var recordsContainer: LinearLayout
@@ -94,7 +94,7 @@ class AddItemActivity : BaseActivity() {
         // Loading collection fields
         selectedCollection?.let {
             lifecycleScope.launch {
-                loadCustomFields(it.custom_fields)
+                loadCustomFields(it.customFields)
             }
         }
 
@@ -188,7 +188,7 @@ class AddItemActivity : BaseActivity() {
                             selectedCollection = it
                             recordsContainer.removeAllViews()
                             lifecycleScope.launch {
-                                loadCustomFields(it.custom_fields)
+                                loadCustomFields(it.customFields)
                             }
                         }
                     }
@@ -247,7 +247,7 @@ class AddItemActivity : BaseActivity() {
     // Collection Saving Method
     private suspend fun saveCollectionItem() {
         val collectionId = selectedCollection?.id ?: return
-        val userId = selectedCollection!!.user_id
+        val userId = selectedCollection!!.userId
         val itemName = itemNameInput.text.toString()
         val itemDescription = itemDescriptionInput.text.toString()
 
@@ -266,12 +266,12 @@ class AddItemActivity : BaseActivity() {
         val collectionItem = CollectionItem(
             id = 0,
             name = itemName,
-            field_contents = fieldContents,
-            user_id = userId,
-            collection_id = collectionId,
-            created_at = "",
-            updated_at = "",
-            image_path = "",
+            fieldContents = fieldContents,
+            userId = userId,
+            collectionId = collectionId,
+            createdAt = "",
+            updatedAt = "",
+            imagePath = "",
             description = itemDescription
         )
 
@@ -313,14 +313,14 @@ class AddItemActivity : BaseActivity() {
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_CODE_GALLERY)
+        startActivityForResult(intent, requestCodeGallery)
     }
 
     // Opens the file manager
     private fun openFileManager() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_CODE_FILE_MANAGER)
+        startActivityForResult(intent, requestCodeFileManager)
     }
 
     // Actions after selecting a photo

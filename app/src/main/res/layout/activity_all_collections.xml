@@ -2,8 +2,6 @@
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/backgroundColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout">
@@ -41,7 +39,7 @@
             <!-- Page title -->
             <TextView
                 android:id="@+id/page_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:textSize="25sp"
@@ -94,7 +92,7 @@
                 <!-- Search input field -->
                 <EditText
                     android:id="@+id/search_input"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_rounded_border"
                     android:hint="@string/search_collection_hint"
@@ -134,7 +132,7 @@
 
                 <LinearLayout
                     android:id="@+id/sort_text_layout"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">

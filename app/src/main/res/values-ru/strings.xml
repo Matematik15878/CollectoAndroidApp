@@ -38,9 +38,7 @@
     <string name="username_length_error">Длина должна быть между 5 и 25 символами</string>
     <string name="username_special_char_error">Имя пользователя не может содержать специальные символы</string>
     <string name="email_already_exists">Электронная почта уже используется</string>
-    <string name="username_already_exists">Имя пользователя уже используется</string>
     <string name="wrong_code_error">Неправильный верификационный код</string>
-    <string name="password_sent">Новый код подтверждения был выслан на вашу почту</string>
     <string name="successful_registration">Ваш аккаунт успешно зрегистрирован</string>
     <string name="successful_authentication">Ваш вход в учетную запись прошел успешно</string>
     <string name="wrong_email_or_password">Введен неправильный адрес эл. почты или пароль</string>
@@ -66,7 +64,7 @@
     <string name="enter_description">введите любопытное описание</string>
     <string name="new_field">Новое поле</string>
     <string name="fields_of_the_collection">Поля коллекции</string>
-    <string name="empty">Здесь так пусто...</string>
+    <string name="empty">Здесь так пусто…</string>
     <string name="choose_from_gallery">Из галереи</string>
     <string name="choose_from_storage">Из локального хранилища</string>
     <string name="choose_image_source">Выберите источник фотографии:</string>
@@ -79,7 +77,6 @@
     <string name="upload_avatar">Выбрать новый аватар</string>
     <string name="choose_action">Выберите действие</string>
     <string name="successful_avatar_change">Аватар добавлен успешно</string>
-    <string name="unsuccessful_avatar_change">Что-то пошло не так, аватар не был добавлен</string>
     <string name="search_collection_hint">Поиск коллекции по имени</string>
     <string name="search_collection_order">Сортировать по</string>
     <string name="edit_collection">Изменить</string>

@@ -35,9 +35,9 @@ class CollectionsRepository(private val context: Context) {
     }
 
     @Serializable
-    private data class CustomFieldsResponse(
+    private class CustomFieldsResponse(
         val id: Long,
-        val custom_fields: String?
+        val customFields: String?
     )
 
     @Serializable
@@ -101,7 +101,7 @@ class CollectionsRepository(private val context: Context) {
 
         val scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, scaledWidth, scaledHeight, true)
 
-        var stream = ByteArrayOutputStream()
+        val stream = ByteArrayOutputStream()
         var quality = 90
         scaledBitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream)
 
@@ -116,17 +116,17 @@ class CollectionsRepository(private val context: Context) {
 
     // Saves data to DB
     private suspend fun saveCollectionData(imageName: String?, collection: Collection): Boolean {
-        val customFieldsJson = Json.encodeToString(collection.custom_fields)
+        val customFieldsJson = Json.encodeToString(collection.customFields)
 
         val data = mapOf(
             "name" to collection.name,
             "description" to collection.description,
-            "user_id" to collection.user_id,
+            "user_id" to collection.userId,
             "custom_fields" to customFieldsJson,
             "image_path" to imageName,
             "created_at" to OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
             "updated_at" to OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
-            "max_field_id" to collection.max_field_id
+            "max_field_id" to collection.maxFieldId
         )
 
         try {
@@ -156,12 +156,12 @@ class CollectionsRepository(private val context: Context) {
         val customFieldsMap = customFieldsResponses.associateBy { it.id }
 
         val result = collections.map { collection ->
-            val customFieldsJson = customFieldsMap[collection.id]?.custom_fields
+            val customFieldsJson = customFieldsMap[collection.id]?.customFields
             val customFields = customFieldsJson?.let {
                 Json.decodeFromString<List<CustomCollectionField>>(it)
             } ?: emptyList()
 
-            collection.copy(custom_fields = customFields)
+            collection.copy(customFields = customFields)
         }
 
         return result
@@ -191,8 +191,8 @@ class CollectionsRepository(private val context: Context) {
         val bucketIcons = supabase.storage.from("collectionsIcons")
         val bucketImages = supabase.storage.from("collectionsImages")
         try {
-            collection.image_path?.let { bucketIcons.delete(it) }
-            collection.image_path?.let { bucketImages.delete(it) }
+            collection.imagePath?.let { bucketIcons.delete(it) }
+            collection.imagePath?.let { bucketImages.delete(it) }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -223,7 +223,7 @@ class CollectionsRepository(private val context: Context) {
     suspend fun loadIcon(collection: Collection): Bitmap? {
         val bucket = supabase.storage.from("collectionsIcons")
 
-        val imagePath = collection.image_path ?: return null
+        val imagePath = collection.imagePath ?: return null
         val sanitizedFileName = imagePath.replace("/", "-")
 
         val cacheDir = File(context.cacheDir, "collectionIcons")
@@ -235,9 +235,9 @@ class CollectionsRepository(private val context: Context) {
 
         try {
             val bytes = bucket.downloadAuthenticated(imagePath)
-            val bitmap = bytes?.let { byteArrayToBitmap(it) }
+            val bitmap = byteArrayToBitmap(bytes)
 
-            bitmap?.let {
+            bitmap.let {
                 cacheDir.mkdirs()
                 FileOutputStream(cacheFile).use { fos ->
                     it.compress(Bitmap.CompressFormat.PNG, 100, fos)
@@ -256,7 +256,7 @@ class CollectionsRepository(private val context: Context) {
     suspend fun loadImage(collection: Collection): Bitmap? {
         val bucket = supabase.storage.from("collectionsImages")
 
-        val imagePath = collection.image_path ?: return null
+        val imagePath = collection.imagePath ?: return null
         val sanitizedFileName = imagePath.replace("/", "-")
 
         val cacheDir = File(context.cacheDir, "collectionsImages")
@@ -268,9 +268,9 @@ class CollectionsRepository(private val context: Context) {
 
         try {
             val bytes = bucket.downloadAuthenticated(imagePath)
-            val bitmap = bytes?.let { byteArrayToBitmap(it) }
+            val bitmap = byteArrayToBitmap(bytes)
 
-            bitmap?.let {
+            bitmap.let {
                 cacheDir.mkdirs()
                 FileOutputStream(cacheFile).use { fos ->
                     it.compress(Bitmap.CompressFormat.PNG, 100, fos)
@@ -300,14 +300,14 @@ class CollectionsRepository(private val context: Context) {
                 collectionSaveResult = modifyCollectionData(imageName, collection)
             }
         } else {
-            collectionSaveResult = modifyCollectionData(collection.image_path, collection)
+            collectionSaveResult = modifyCollectionData(collection.imagePath, collection)
         }
         return (photoSaveResult && collectionSaveResult)
     }
 
     // Modifies data in DB
     private suspend fun modifyCollectionData(imageName: String?, collection: Collection): Boolean {
-        val customFieldsJson = Json.encodeToString(collection.custom_fields)
+        val customFieldsJson = Json.encodeToString(collection.customFields)
 
         try {
             supabase.from("collections").update(
@@ -317,7 +317,7 @@ class CollectionsRepository(private val context: Context) {
                     set("custom_fields", customFieldsJson)
                     set("image_path", imageName)
                     set("updated_at", OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME))
-                    set("max_field_id", collection.max_field_id)
+                    set("max_field_id", collection.maxFieldId)
                 }
             ) {
                 filter {

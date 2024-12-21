@@ -40,9 +40,7 @@
     <string name="username_length_error">Length must be between 5 and 25 characters</string>
     <string name="username_special_char_error">Username must not contain special characters</string>
     <string name="email_already_exists">This email is already in use</string>
-    <string name="username_already_exists">This username is already in use</string>
     <string name="wrong_code_error">Incorrect verification code</string>
-    <string name="password_sent">A new verification code has been sent to your email</string>
     <string name="successful_registration">Your account has been successfully registered</string>
     <string name="successful_authentication">Login to your account was successful</string>
     <string name="wrong_email_or_password">Incorrect email or password entered</string>
@@ -81,7 +79,6 @@
     <string name="upload_avatar">Select a new avatar</string>
     <string name="choose_action">What do you want to do?</string>
     <string name="successful_avatar_change">Avatar successfully changed</string>
-    <string name="unsuccessful_avatar_change">Something went wrong, avatar not changed</string>
     <string name="search_collection_hint">Search collection by name</string>
     <string name="search_collection_order">Order by </string>
     <string name="edit_collection">Edit collection</string>
